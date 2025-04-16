@@ -388,9 +388,9 @@ checksum = "877a4ace8713b0bcf2a4e7eec82529c029f1d0619886d18145fea96c3ffe5c0f"
 
 [[package]]
 name = "firestore"
-version = "0.44.1"
+version = "0.45.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1678f207b7bb8ced87dab8cbfac795a357e6588de1e6eed7502ca53958a25a9e"
+checksum = "a08c3a9436fac2f42a8eee9673f89a23a476c1b818b4f5cb85813d3a1e1b9558"
 dependencies = [
  "async-trait",
  "backoff",
@@ -525,9 +525,9 @@ dependencies = [
 
 [[package]]
 name = "gcloud-sdk"
-version = "0.26.4"
+version = "0.27.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8269d6c07cddc7c4f7d679da74fbffa43713a891e0ccfcb37eb02deb21620225"
+checksum = "00c7dc8c1f6c0865d02a2d931f3a15ac919ef583077c5141fd9b8efa8b493c44"
 dependencies = [
  "async-trait",
  "bytes",
@@ -543,7 +543,7 @@ dependencies = [
  "serde",
  "serde_json",
  "tokio",
- "tonic",
+ "tonic 0.13.0",
  "tower 0.5.2",
  "tower-layer",
  "tower-util",
@@ -1241,7 +1241,7 @@ dependencies = [
  "prost",
  "prost-types",
  "thiserror 1.0.69",
- "tonic",
+ "tonic 0.12.3",
  "tracing",
 ]
 
@@ -2275,6 +2275,37 @@ dependencies = [
 ]
 
 [[package]]
+name = "tonic"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "85839f0b32fd242bb3209262371d07feda6d780d16ee9d2bc88581b89da1549b"
+dependencies = [
+ "async-trait",
+ "axum 0.8.3",
+ "base64",
+ "bytes",
+ "h2",
+ "http",
+ "http-body",
+ "http-body-util",
+ "hyper",
+ "hyper-timeout",
+ "hyper-util",
+ "percent-encoding",
+ "pin-project 1.1.10",
+ "prost",
+ "rustls-native-certs",
+ "socket2",
+ "tokio",
+ "tokio-rustls",
+ "tokio-stream",
+ "tower 0.5.2",
+ "tower-layer",
+ "tower-service",
+ "tracing",
+]
+
+[[package]]
 name = "tower"
 version = "0.4.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2302,9 +2333,12 @@ checksum = "d039ad9159c98b70ecfd540b2573b97f7f52c3e8d9f8ad57a24b916a536975f9"
 dependencies = [
  "futures-core",
  "futures-util",
+ "indexmap 2.9.0",
  "pin-project-lite",
+ "slab",
  "sync_wrapper",
  "tokio",
+ "tokio-util",
  "tower-layer",
  "tower-service",
  "tracing",

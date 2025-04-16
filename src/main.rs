@@ -1,5 +1,6 @@
 pub mod observability;
 pub mod repository;
+mod project_router;
 
 use axum::{extract::State, http::StatusCode, middleware, response::{Html, IntoResponse}, routing::get, Router};
 use serde_json::json;
@@ -38,7 +39,6 @@ async fn main() {
     let db: FirestoreDb = FirestoreDb::new(&gcp_project_id).await.expect("Could not initiate DB client");
 
     let proj_repo = ProjectRepository::new(db);
-    proj_repo.fill_cache().await;
 
     let thingy = Arc::new(proj_repo);
 
@@ -47,7 +47,7 @@ async fn main() {
 
     // Set up our application with routes
     let app = Router::new()
-        .with_state(state)
+        .nest("/v1", project_router::router(state))
         .layer(middleware::from_fn(extract_context));
 
     // Run our application
@@ -56,9 +56,4 @@ async fn main() {
     // run our app with hyper, listening globally on port 3000
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
-}
-
-#[derive(Deserialize, Debug)]
-struct AdminQuery {
-    project: Option<String>,
 }
