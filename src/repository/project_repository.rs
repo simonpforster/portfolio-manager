@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::sync::RwLock;
 use firestore::{path, FirestoreDb, FirestoreQueryDirection, FirestoreResult};
 use futures_core::stream::BoxStream;
 use futures_util::TryStreamExt;

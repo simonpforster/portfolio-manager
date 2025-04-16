@@ -14,7 +14,7 @@ pub(crate) fn router(state: Arc<AppState>) -> Router {
         .with_state(state)
 }
 
-async fn get_handler(Path((document_id)): Path<(String)>, State(state): State<Arc<AppState>>) -> impl IntoResponse {
+async fn get_handler(Path(document_id): Path<String>, State(state): State<Arc<AppState>>) -> impl IntoResponse {
     let project: Project = state.project_repository.get_project_by_document_id(&document_id).await.unwrap();
     axum::response::Json(project)
 }

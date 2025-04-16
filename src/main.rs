@@ -2,15 +2,10 @@ pub mod observability;
 pub mod repository;
 mod project_router;
 
-use axum::{extract::State, http::StatusCode, middleware, response::{Html, IntoResponse}, routing::get, Router};
-use serde_json::json;
+use axum::{middleware, Router};
 use std::{env, net::SocketAddr, sync::Arc};
-use axum::extract::Query;
-use axum::response::Redirect;
 use firestore::FirestoreDb;
-use serde::Deserialize;
-use tower_http::services::ServeDir;
-use tracing::{info, instrument, warn};
+use tracing::{info, warn};
 use crate::observability::init_tracing;
 use crate::observability::propagators::extract_context;
 use crate::repository::project_repository::ProjectRepository;

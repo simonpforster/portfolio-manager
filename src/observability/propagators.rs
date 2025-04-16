@@ -1,8 +1,8 @@
 use axum::extract::Request;
-use axum::http::{HeaderMap, HeaderName};
+use axum::http::HeaderMap;
 use axum::middleware::Next;
 use axum::response::Response;
-use opentelemetry::propagation::{Extractor, Injector};
+use opentelemetry::propagation::Extractor;
 use std::convert::Infallible;
 use tracing::{instrument, Instrument, Span};
 use tracing_opentelemetry::OpenTelemetrySpanExt;
