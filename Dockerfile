@@ -10,8 +10,6 @@ RUN cargo build --release
 FROM rust:1.86.0-slim-bullseye AS runner
 
 COPY --from=builder --chown=65534 /target/release/portfolio-manager /usr/local/bin
-ADD --chown=65534 /templates /templates
-ADD --chown=65534 /static /static
 
 ENV RUST_BACKTRACE=full
 
