@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use firestore::{path, FirestoreDb, FirestoreQueryDirection, FirestoreResult};
 use futures_core::stream::BoxStream;
-use futures_util::TryStreamExt;
+use futures_util::{StreamExt, TryStreamExt};
 use serde::{Deserialize, Serialize};
 use tracing::info;
 
@@ -43,6 +43,24 @@ impl ProjectRepository {
             .obj()
             .one(document_id)
             .await.unwrap()
+    }
+
+    pub async fn get_project_by_owner_id_and_project_id(&self, owner_id: &str, project_id: &str) -> Option<Project> {
+        let results: BoxStream<FirestoreResult<Project>>  = self.db.fluent().select()
+            .from(PROJECT_COLLECTION_NAME)
+            .filter(|q| {
+                q.field("owner").eq(owner_id)
+                    .and(q.field("projectId").eq(project_id))
+            }).order_by([(
+            path!(Project::year),
+            FirestoreQueryDirection::Descending,
+        )]).obj()
+            .stream_query_with_errors()
+            .await.unwrap();
+        
+        let projects: Vec<Project> = results.try_collect().await.unwrap();
+
+        projects.first().map(|p| p.to_owned())
     }
 }
 
